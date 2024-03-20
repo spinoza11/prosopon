@@ -4,8 +4,9 @@ import tkinter as tk
 from datetime import datetime
 
 import numpy as np
-from load_dataset import dataset
 from PIL import ImageTk
+
+from load_dataset import dataset
 
 
 class session:
@@ -63,7 +64,7 @@ class session:
       self.set_bottom_button("Stop",self.stop_session)
 
    def __init__(self) -> None:
-      self.session_size=10
+      self.session_size=100
       self.score_file = "score_history.csv"
       self.root = tk.Tk()
       self.root.configure(background="#666666")
@@ -76,7 +77,7 @@ class session:
 
    def choice(self,is_impostor):
       self.try_number+=1
-      print("is_impostor: ",is_impostor)
+      print("correct choice: ",(bool)(is_impostor))
       self.session_successes.append(is_impostor)
       if not is_impostor:
          print(f"Not the impostor! impostor is {self.people.impostor}, you clicked on {self.people.group}")

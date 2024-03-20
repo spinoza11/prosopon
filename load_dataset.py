@@ -14,9 +14,12 @@ class person:
    def __init__(self,name="",address="",gender = "") -> None:
       self.name  = name
       #print(name)
-      self.first_name,self.last_name = name.split("_")[0],name.split("_")[0]
+      self.first_name,self.last_name = name.split("_")[0],'_'.join(name.split("_")[1:])
       self.address = address
       self.gender = gender
+   
+   def items(self):
+      return self.name,self.first_name,self.last_name,self.address,self.gender
 
 
 def listdir_full(dir_path,include = None,avoid = None):
@@ -44,7 +47,10 @@ class dataset:
       self.choose_group()
    
    def choose_group(self):
-      self.group = random.choice(list(self.people_multiple.items()))[0]
+      group = random.choice(list(self.people_multiple.items()))[0]
+      while self.people[group].gender in ["unknown","andy"]:
+         group = random.choice(list(self.people_multiple.items()))[0]
+      self.group=group
       return self.group
    
    def choose_impostor(self):
@@ -61,6 +67,7 @@ class dataset:
    def choose_new_people(self):
       self.choose_group()
       self.choose_impostor()
+      #print(self.people[self.group].items())
       return self.impostor,self.group      
 
    def __load_images(self,name,n=2):
