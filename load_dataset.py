@@ -78,7 +78,7 @@ class dataset:
       for i in range(n):
          chosen.append( random.choice(images_addresses))
          images_addresses.remove(chosen[-1])
-      chosen_images = [Image.open(im) for im in chosen ]
+      chosen_images = [Image.open(im).resize((80,80)) for im in chosen ]
       return chosen_images
    
    def load_impostor(self):

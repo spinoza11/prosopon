@@ -43,31 +43,31 @@ class session:
          button.grid_forget()
          button.destroy()
       self.button_list=[]
-      print(self.root.grid_slaves())
       self.add_start_button()
-      if self.try_number>=self.session_size:
-         self.save_session()
+      self.save_session()
 
    def save_session(self):
       with open(self.score_file,"a+") as f:
-         f.write(f"Date: { datetime.today().strftime('%Y-%m-%d')}\nDataset: {self.people.dataset_address}\nscore: {np.average(self.session_successes)}\nsession length: {self.session_size}\n\n")
+         f.write(f"Date: { datetime.today().strftime('%Y-%m-%d')}\nDataset: {self.people.dataset_address}\nscore: {np.average(self.session_successes)}\nsession length: {self.try_number}\n\n")
 
-   def set_bottom_button(self,button_name,function):
+   def set_button(self,button_name,function,gridx=0,gridy=1):
       self.bottom_button = tk.Button(self.root, text = f"{button_name} training",fg='white',border=0,font="Helvetica 14",relief='flat' ,\
                 activebackground='#888888', bg = '#888888',command = function, padx=20,pady=10)
-      self.bottom_button.grid(row=1,column=0)
+      self.bottom_button.grid(row=gridy,column=gridx)
 
    def add_start_button(self):
-      self.set_bottom_button("Start",self.start_session)
+      self.set_button("Start",self.start_session)
 
    def add_stop_button(self):
-      self.set_bottom_button("Stop",self.stop_session)
+      self.set_button("Stop",self.stop_session)
 
    def __init__(self) -> None:
       self.session_size=100
       self.score_file = "score_history.csv"
       self.root = tk.Tk()
       self.root.configure(background="#666666")
+      self.root.geometry("600x400") #You want the size of the app to be 500x500
+
       self.root.title('Prosopon: face recognition training') 
       self.root.grid()
       self.people = dataset()
